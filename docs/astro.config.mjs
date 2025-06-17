@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import starlightThemeRapide from 'starlight-theme-rapide'
+import starlightVersionsPlugin  from 'starlight-versions';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,6 +13,9 @@ export default defineConfig({
     integrations: [
         starlight({
             title: 'Convex + Better Auth',
+            components: {
+                ThemeSelect: './src/components/ThemeSelect.astro'
+            },
             logo: {
                 replacesTitle: false,
                 light: './public/convex-mark-black.svg',
@@ -23,19 +27,29 @@ export default defineConfig({
                 { icon: 'discord', label: 'Discord', href: 'https://discord.gg/convex-dev' },
             ],
             sidebar: [
-                {slug: '', label: 'Quick Start', link: '/docs/'},
-                {slug: 'schemas-and-sync', label: 'Schemas & Data Syncing', link: '/docs/schemas-and-sync/'},
-                {slug: 'basic-usage', label: 'Basic Usage', link: '/docs/basic-usage/'},
-                {slug: 'integrations', label: 'Integrations', link: '/docs/integrations/', badge: {text: 'New', variant: 'success'}},
-                {slug: 'supported-plugins', label: 'Currently Supported Plugins', link: '/docs/supported-plugins/'},
-                {label: 'Guides', collapsed: false, items: [
-                    {slug: 'guides/migrating-existing-users', label: 'Migrating Existing Users', link: '/docs/guides/migrating-existing-users/'},
-                    {slug: 'guides/migrate-056-060', label: 'Migrating from 0.5.6 to 0.6.0', link: '/docs/guides/migrate-056-060/', badge: {text: 'New', variant: 'success'}},
-                    {slug: 'guides/migrate-040-050', label: 'Migrating from 0.4.0 to 0.5.0', link: '/docs/guides/migrate-040-050/'},
-                ]},
+                { slug: '', label: 'Quick Start', link: '/docs/' },
+                { slug: 'schemas-and-sync', label: 'Schemas & Data Syncing', link: '/docs/schemas-and-sync/' },
+                { slug: 'basic-usage', label: 'Basic Usage', link: '/docs/basic-usage/' },
+                { slug: 'integrations', label: 'Integrations', link: '/docs/integrations/', badge: { text: 'New', variant: 'success' } },
+                { slug: 'supported-plugins', label: 'Currently Supported Plugins', link: '/docs/supported-plugins/' },
+                {
+                    label: 'Guides', collapsed: false, items: [
+                        { slug: 'guides/migrating-existing-users', label: 'Migrating Existing Users', link: '/docs/guides/migrating-existing-users/' },
+                        { slug: 'guides/migrate-056-060', label: 'Migrating from 0.5.6 to 0.6.0', link: '/docs/guides/migrate-056-060/', badge: { text: 'New', variant: 'success' } },
+                        { slug: 'guides/migrate-040-050', label: 'Migrating from 0.4.0 to 0.5.0', link: '/docs/guides/migrate-040-050/' },
+                    ]
+                },
             ],
             customCss: ['./src/styles/global.css'],
-            plugins: [starlightThemeRapide()]
+            plugins: [starlightThemeRapide(), starlightVersionsPlugin({
+                versions: [
+                    {
+                        slug: '0.6.0',
+                        label: 'v0.6.0',
+                        redirect: 'same-page'
+                    }
+                ]
+            })],
         }),
     ],
 });
